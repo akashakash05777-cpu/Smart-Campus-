@@ -216,6 +216,45 @@ export const AuthProvider = ({ children }) => {
     notifyDataListeners('user_update', newUserData);
   }, [user, notifyDataListeners]);
 
+  // Ensure automatic logout when the tab/window is closed or the page is hidden
+  useEffect(() => {
+    const handleImmediateLogout = () => {
+      try {
+        if (user) {
+          const finalSharedData = {
+            ...sharedData,
+            lastActivity: new Date().toISOString()
+          };
+          localStorage.setItem(`sharedData_${user.id}`, JSON.stringify(finalSharedData));
+        }
+      } catch (e) {
+        // no-op
+      } finally {
+        // Synchronous cleanup so it persists during unload
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('loginType');
+        localStorage.removeItem('staffUser');
+        localStorage.removeItem('studentUser');
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        handleImmediateLogout();
+      }
+    };
+
+    window.addEventListener('beforeunload', handleImmediateLogout);
+    window.addEventListener('pagehide', handleImmediateLogout);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleImmediateLogout);
+      window.removeEventListener('pagehide', handleImmediateLogout);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [user, sharedData]);
+
   // Role checking functions (enhanced)
   const isAdmin = useCallback(() => {
     return user && ['Administrator', 'IT Admin'].includes(user.role);
