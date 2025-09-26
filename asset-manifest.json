@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Smart-Campus-/static/css/main.cdbc847a.css",
+    "main.js": "/Smart-Campus-/static/js/main.b5313379.js",
+    "static/js/453.2816558c.chunk.js": "/Smart-Campus-/static/js/453.2816558c.chunk.js",
+    "index.html": "/Smart-Campus-/index.html",
+    "main.cdbc847a.css.map": "/Smart-Campus-/static/css/main.cdbc847a.css.map",
+    "main.b5313379.js.map": "/Smart-Campus-/static/js/main.b5313379.js.map",
+    "453.2816558c.chunk.js.map": "/Smart-Campus-/static/js/453.2816558c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cdbc847a.css",
+    "static/js/main.b5313379.js"
+  ]
+}
